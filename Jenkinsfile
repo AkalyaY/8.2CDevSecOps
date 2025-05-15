@@ -52,6 +52,7 @@ pipeline {
       stage('Run SonarScanner Analysis') {
         steps {
           script {
+             def sonarScannerPath = "${env.WORKSPACE}\\sonar-scanner\\bin\\sonar-scanner.bat"
              bat 'sonar-scanner\\bin\\sonar-scanner.bat -Dsonar.login=%SONAR_TOKEN%'
             }
           }
