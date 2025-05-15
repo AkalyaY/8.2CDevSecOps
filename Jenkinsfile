@@ -1,6 +1,9 @@
 pipeline {
   agent any
 
+  environment {
+    SONAR_TOKEN = credentials('SONAR_TOKEN')
+
    tools {
     nodejs 'NodeJS' 
   }
@@ -35,5 +38,13 @@ pipeline {
         bat 'npm audit || exit /b 0'
       }
     }
+
+    stage('SonarCloud Analysis') {
+        steps {
+          script {
+                    bat 'curl -sSLo sonarscanner.zip https://github.com/SonarSource/sonar-scanner-cli/releases/download/4.6.2.2472/sonar-scanner-cli-4.6.2.2472-linux.zip'
+                    bat 'unzip sonarscanner.zip -d sonar-scanner'
+                    bat './sonar-scanner/bin/sonar-scanner -Dsonar.login=%SONAR_TOKEN%'
+                }
   }
 }
