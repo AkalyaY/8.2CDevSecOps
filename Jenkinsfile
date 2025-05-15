@@ -43,7 +43,7 @@ pipeline {
      stage('SonarCloud Analysis') {
        steps {
          script {
-           bat 'curl -L -o sonarscanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-windows.zip''
+           bat 'curl -L -o sonarscanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-windows.zip'
            bat 'powershell -Command "Expand-Archive -Path sonarscanner.zip -DestinationPath sonar-scanner"'
           }
        }
