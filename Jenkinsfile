@@ -43,13 +43,18 @@ pipeline {
      stage('SonarCloud Analysis') {
        steps {
          script {
-           bat 'curl -sSLo sonarscanner.zip https://github.com/SonarSource/sonar-scanner-cli/releases/download/4.6.2.2472/sonar-scanner-cli-4.6.2.2472-windows.zip'
-           powershell '''
-           Expand-Archive -Path "sonarscanner.zip" -DestinationPath "sonar-scanner"
-           '''
-           bat './sonar-scanner/bin/sonar-scanner -Dsonar.login=%SONAR_TOKEN%'
-         }
+           bat 'curl -L -o sonarscanner.zip https://binaries.sonarsource.com/Distribution/sonar-scanner-cli/sonar-scanner-cli-4.7.0.2747-windows.zip''
+           bat 'powershell -Command "Expand-Archive -Path sonarscanner.zip -DestinationPath sonar-scanner"'
+          }
        }
      }
+
+      stage('Run SonarScanner Analysis') {
+        steps {
+          script {
+             bat 'sonar-scanner\\bin\\sonar-scanner.bat -Dsonar.login=%SONAR_TOKEN%'
+            }
+          }
+        }
+      }
   }
-}
