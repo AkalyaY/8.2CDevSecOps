@@ -44,7 +44,9 @@ pipeline {
        steps {
          script {
            bat 'curl -sSLo sonarscanner.zip https://github.com/SonarSource/sonar-scanner-cli/releases/download/4.6.2.2472/sonar-scanner-cli-4.6.2.2472-linux.zip'
-           bat 'unzip sonarscanner.zip -d sonar-scanner'
+           powershell '''
+           Expand-Archive -Path "sonarscanner.zip" -DestinationPath "sonar-scanner"
+           '''
            bat './sonar-scanner/bin/sonar-scanner -Dsonar.login=%SONAR_TOKEN%'
          }
        }
